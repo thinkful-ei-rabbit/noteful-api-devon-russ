@@ -13,16 +13,16 @@ const NoteService = {
   },
   getById(knex, id) {
     return knex
-      .from('blogful_notes')
+      .from('noteful_notes')
       .select('*')
       .where('id', id)
       .first()
   },
   deleteNotes(knex, id) {
-    return knex('blogful_notes').where({ id }).delete()
+    return knex('noteful_notes').where({ id }).delete()
   },
   updateNotes(knex, id, newNotesFields) {
-    return knex('blogful_notes').where({ id }).update(newNotesFields)
+    return knex('noteful_notes').where({ id }).update(newNotesFields)
   }
 
 }
