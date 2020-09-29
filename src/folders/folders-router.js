@@ -24,8 +24,8 @@ foldersRouter
   .catch(next)
 })
 .post(jsonParser, (req, res, next) => {
-  const { name, content } = req.body
-  const newFolders = { name, content}
+  const { name } = req.body
+  const newFolders = { name }
 
   if (name == null) {
     return res.status(400).json({
@@ -78,14 +78,14 @@ foldersRouter
   })
 
   .patch(jsonParser, (req, res, next) => {
-    const { name, content } = req.body
-    const folderToUpdate = {name, content}
+    const { name } = req.body
+    const folderToUpdate = {name}
 
     const numberOfValues = Object.values(folderToUpdate).filter(Boolean).length
       if (numberOfValues === 0)
         return res.status(400).json({
           error: {
-            message: `Request body must contain either 'name' or 'content'`
+            message: `Request body must contain 'name'`
           }
         })
       
