@@ -66,7 +66,35 @@ describe('Notes Endpoints', function() {
         })
       })
     })
-
-    
   })
+
+  describe('GET /api/notes/:note_id', () => {
+    context('Given no notes', () => {
+      it(`responds with 404`, () => {
+        const noteId = 123456
+        return supertest(app)
+          .get(`/api/notes/${noteId}`)
+          .expect(404, { error: { message: `Note doesn't exist` } })
+      })
+    })
+
+    context('Given there are notes in the database', () => {
+      const testNotes = makeNotesArray()
+
+      beforeEach('insert notes', () => {
+        return db
+          .into('noteful_notes')
+          .insert(testNotes)
+      })
+
+      it('responds with 200 and the specified article', () => {
+        const noteId = 2
+        const expectedNote = testNotes[noteId - 1]
+        return supertest(app)
+          .get(`api/notes/${noteId}`)
+          .expect(200, expectedNote)
+      })
+    })
+  })
+
 })
